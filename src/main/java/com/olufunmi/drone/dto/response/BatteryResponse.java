@@ -2,11 +2,13 @@ package com.olufunmi.drone.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 
 @Builder
 @AllArgsConstructor
 @Setter
+@Getter
 public class BatteryResponse {
     private String batteryLevel;
     private String serialNumber;

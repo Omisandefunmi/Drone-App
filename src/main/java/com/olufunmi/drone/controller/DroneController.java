@@ -1,11 +1,8 @@
 package com.olufunmi.drone.controller;
 
 import com.olufunmi.drone.dto.request.LoadDroneRequest;
-import com.olufunmi.drone.dto.response.ApiResponse;
-import com.olufunmi.drone.dto.response.DroneResponse;
+import com.olufunmi.drone.dto.response.*;
 import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
-import com.olufunmi.drone.dto.response.LoadDroneResponse;
-import com.olufunmi.drone.dto.response.MedicationResponse;
 import com.olufunmi.drone.exceptions.DroneException;
 import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.service.DroneService;
@@ -46,7 +43,6 @@ public class DroneController {
     }
 
     @GetMapping("/view")
-
     public ResponseEntity <?> checkLoadedMedications(@RequestParam String serialNumber) throws DroneException {
         List<MedicationResponse> response = droneService.checkLoadedMedications(serialNumber);
         ApiResponse apiResponse = ApiResponse.builder()
@@ -59,9 +55,8 @@ public class DroneController {
     }
 
     @GetMapping("/view_available")
-
     public ResponseEntity <?> viewAvailableDrone(){
-        List<Drone> response = droneService.viewAvailableDrone();
+        List<DroneResponse> response = droneService.viewAvailableDrone();
         ApiResponse apiResponse = ApiResponse.builder()
                 .statusCode(302)
                 .data(response)
@@ -69,6 +64,17 @@ public class DroneController {
                 .build();
         return  new ResponseEntity<>(apiResponse,HttpStatus.FOUND);
 
+    }
+
+    @GetMapping("/battery")
+    public ResponseEntity<?> batteryCheck(@RequestParam String serialNumber) throws DroneException {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .statusCode(302)
+                .data(droneService.batteryCheck(serialNumber))
+                .successful(true)
+                .build();
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.FOUND);
     }
 
 }

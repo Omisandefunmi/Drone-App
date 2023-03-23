@@ -16,7 +16,7 @@ public interface DroneService {
     LoadDroneResponse loadDrone(LoadDroneRequest loadRequest) throws DroneException;
 
     List <MedicationResponse> checkLoadedMedications(String serialNumber) throws DroneException;
-    List<Drone> viewAvailableDrone();
+    List<DroneResponse> viewAvailableDrone();
     BatteryResponse batteryCheck(String serialNumber) throws DroneException;
 }
 

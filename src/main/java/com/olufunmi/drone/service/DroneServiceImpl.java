@@ -38,10 +38,8 @@ public class DroneServiceImpl implements DroneService{
                 .droneModel(droneRegistrationRequest.getDroneModel())
                 .build();
         Drone savedDrone = droneRepository.save(drone);
-        DroneResponse response = new DroneResponse();
-        response.setMessage("Drone successfully registered");
-        response.setDrone(savedDrone);
-        return response;
+
+        return buildDroneResponse(savedDrone);
     }
 
     @Override
@@ -58,12 +56,22 @@ public class DroneServiceImpl implements DroneService{
         Medication medication = medicationService.addMedication(request);
 
         drone.getMedications().add(medication);
+        changeDroneStatus(drone);
         droneRepository.save(drone);
 
         LoadDroneResponse loadDroneResponse = new LoadDroneResponse();
         loadDroneResponse.setMessage("Drone loaded successfully");
         loadDroneResponse.setMedication(medication);
         return loadDroneResponse;
+    }
+
+    private void changeDroneStatus(Drone drone) {
+        if(drone.cumulateLoadedWeight() < drone.getWEIGHTLIMIT()){
+            drone.setDroneState(DroneState.LOADING);
+        }
+        if(drone.cumulateLoadedWeight() == drone.getWEIGHTLIMIT()){
+            drone.setDroneState(DroneState.LOADED);
+        }
     }
 
     @Override
@@ -77,9 +85,10 @@ public class DroneServiceImpl implements DroneService{
     }
 
     @Override
-    public List<Drone> viewAvailableDrone() {
-
-        return droneRepository.findByAvailableDroneByState();
+    public List<DroneResponse> viewAvailableDrone() {
+        var drones =  droneRepository.findByAvailableDroneByState();
+        List<DroneResponse> availableDrones = drones.stream().map(this::buildDroneResponse).toList();
+        return availableDrones;
     }
 
     @Override
@@ -123,6 +132,17 @@ public class DroneServiceImpl implements DroneService{
                 .build();
     }
 
+    private DroneResponse buildDroneResponse(Drone drone){
+        return DroneResponse.builder()
+                .batteryCapacity(drone.getBatteryCapacity())
+                .droneModel(drone.getDroneModel().toString())
+                .droneState(drone.getDroneState().toString())
+                .loadedWeight(drone.getLoadedWeight())
+                .medications(drone.getMedications())
+                .weightLimit(drone.getWEIGHTLIMIT())
+                .serialNumber(drone.getSerialNumber())
+                .build();
+    }
 
 
 
