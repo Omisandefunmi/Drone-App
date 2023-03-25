@@ -37,6 +37,7 @@ public class DroneServiceImpl implements DroneService{
                 .batteryLevel(droneRegistrationRequest.getBatteryLevel())
                 .serialNumber(droneRegistrationRequest.getSerialNumber())
                 .droneModel(droneRegistrationRequest.getDroneModel())
+                .batteryLevel(80.0)
                 .build();
         Drone savedDrone = droneRepository.save(drone);
 
@@ -54,7 +55,11 @@ public class DroneServiceImpl implements DroneService{
             throw new DroneException("The Drone cannot load more than the weight limit");
         }
         if(drone.getBatteryLevel() < 25.0){
-            throw new LowBatteryException("Drone battery is below 25");
+            throw new LowBatteryException("""
+                    Drone battery is below 25
+                    
+                    Drone's battery too low for loading or flight
+                    """);
         }
         AddMedicationRequest request = buildMedicalRequest(loadRequest);
         Medication medication = medicationService.addMedication(request);
@@ -105,15 +110,6 @@ public class DroneServiceImpl implements DroneService{
                 .batteryLevel(drone.getBatteryLevel())
                 .serialNumber(drone.getSerialNumber())
                 .droneModel(drone.getDroneModel().toString())
-                .build();
-    }
-
-    private BatteryResponse createAuditResponse(Drone drone){
-        return BatteryResponse.builder()
-//                .serialNumber(drone.getId())
-                .droneModel(drone.getDroneModel().toString())
-                .serialNumber(drone.getSerialNumber())
-                .batteryLevel(drone.getBatteryLevel())
                 .build();
     }
 
