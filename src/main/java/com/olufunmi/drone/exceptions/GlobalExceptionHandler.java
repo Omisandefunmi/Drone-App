@@ -17,4 +17,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .successful(false)
                 .build(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(LowBatteryException.class)
+    public ResponseEntity<?> handleLowBatteryException(LowBatteryException lowBatteryException){
+        return new ResponseEntity<>(ApiResponse.builder()
+                .data(lowBatteryException.getMessage())
+                .statusCode(400)
+                .successful(false)
+                .build(), HttpStatus.BAD_REQUEST);
+    }
 }

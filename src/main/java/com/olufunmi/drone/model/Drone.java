@@ -5,7 +5,6 @@ import com.olufunmi.drone.model.enums.DroneState;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -27,7 +26,7 @@ public class Drone {
     private final double WEIGHTLIMIT = 500.0;
 
     private double loadedWeight;
-    private String batteryCapacity;
+    private double batteryLevel;
     @Enumerated(EnumType.STRING)
     private DroneState droneState;
 

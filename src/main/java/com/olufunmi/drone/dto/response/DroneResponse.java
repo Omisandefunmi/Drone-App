@@ -1,10 +1,6 @@
 package com.olufunmi.drone.dto.response;
 
-import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.model.Medication;
-import com.olufunmi.drone.model.enums.DroneModel;
-import com.olufunmi.drone.model.enums.DroneState;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -20,8 +16,8 @@ public class DroneResponse {
     private  double weightLimit;
 
     private double loadedWeight;
-    private String batteryCapacity;
-    private String droneState;
+    private double batteryLevel;
+private String droneState;
 
     private List<Medication> medications ;
 }

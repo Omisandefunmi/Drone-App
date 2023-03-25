@@ -23,7 +23,7 @@ class DroneServiceTest {
         droneRegistrationRequest.setSerialNumber("BIG023");
         droneRegistrationRequest.setDroneModel(DroneModel.LIGHTWEIGHT);
 //        droneRegistrationRequest.s(386);
-        droneRegistrationRequest.setBatteryCapacity("95%");
+        droneRegistrationRequest.setBatteryLevel("95%");
         droneRegistrationRequest.setDroneState(DroneState.LOADING);
         DroneResponse response = droneService.registerDrone(droneRegistrationRequest);
         assertNotNull(response);

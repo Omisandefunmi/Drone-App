@@ -5,6 +5,7 @@ import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
 import com.olufunmi.drone.dto.request.LoadDroneRequest;
 import com.olufunmi.drone.dto.response.BatteryResponse;
 import com.olufunmi.drone.exceptions.DroneException;
+import com.olufunmi.drone.exceptions.LowBatteryException;
 import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.model.Medication;
 import com.olufunmi.drone.model.enums.DroneState;
@@ -33,7 +34,7 @@ public class DroneServiceImpl implements DroneService{
 
         Drone drone = Drone.builder()
                 .droneState(DroneState.IDLE)
-                .batteryCapacity(droneRegistrationRequest.getBatteryCapacity())
+                .batteryLevel(droneRegistrationRequest.getBatteryLevel())
                 .serialNumber(droneRegistrationRequest.getSerialNumber())
                 .droneModel(droneRegistrationRequest.getDroneModel())
                 .build();
@@ -51,6 +52,9 @@ public class DroneServiceImpl implements DroneService{
         Drone drone = savedDrone.get();
         if (drone.cumulateLoadedWeight() >= drone.getWEIGHTLIMIT() || (drone.cumulateLoadedWeight() + loadRequest.getWeight()) > drone.getWEIGHTLIMIT()) {
             throw new DroneException("The Drone cannot load more than the weight limit");
+        }
+        if(drone.getBatteryLevel() < 25.0){
+            throw new LowBatteryException("Drone battery is below 25");
         }
         AddMedicationRequest request = buildMedicalRequest(loadRequest);
         Medication medication = medicationService.addMedication(request);
@@ -87,8 +91,7 @@ public class DroneServiceImpl implements DroneService{
     @Override
     public List<DroneResponse> viewAvailableDrone() {
         var drones =  droneRepository.findByAvailableDroneByState();
-        List<DroneResponse> availableDrones = drones.stream().map(this::buildDroneResponse).toList();
-        return availableDrones;
+        return drones.stream().map(this::buildDroneResponse).toList();
     }
 
     @Override
@@ -99,7 +102,7 @@ public class DroneServiceImpl implements DroneService{
         }
         Drone drone = found.get();
         return BatteryResponse.builder()
-                .batteryLevel(drone.getBatteryCapacity())
+                .batteryLevel(drone.getBatteryLevel())
                 .serialNumber(drone.getSerialNumber())
                 .droneModel(drone.getDroneModel().toString())
                 .build();
@@ -110,7 +113,7 @@ public class DroneServiceImpl implements DroneService{
 //                .serialNumber(drone.getId())
                 .droneModel(drone.getDroneModel().toString())
                 .serialNumber(drone.getSerialNumber())
-                .batteryLevel(drone.getBatteryCapacity())
+                .batteryLevel(drone.getBatteryLevel())
                 .build();
     }
 
@@ -134,7 +137,7 @@ public class DroneServiceImpl implements DroneService{
 
     private DroneResponse buildDroneResponse(Drone drone){
         return DroneResponse.builder()
-                .batteryCapacity(drone.getBatteryCapacity())
+                .batteryLevel(drone.getBatteryLevel())
                 .droneModel(drone.getDroneModel().toString())
                 .droneState(drone.getDroneState().toString())
                 .loadedWeight(drone.getLoadedWeight())

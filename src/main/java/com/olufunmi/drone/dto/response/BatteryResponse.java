@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BatteryResponse {
-    private String batteryLevel;
+    private double batteryLevel;
     private String serialNumber;
     private String droneModel;
 
