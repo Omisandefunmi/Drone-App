@@ -25,7 +25,7 @@ public class Task {
     public void cronTask(){
         checkDronesBatteries();
         log.info("about to send mail");
-        mailSenderImpl.sendEmail();
+//        mailSenderImpl.sendEmail();
         log.info("mail sent");
     }
 
