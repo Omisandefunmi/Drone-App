@@ -18,10 +18,10 @@ import java.util.List;
 public class Task {
 
     private final DroneRepository droneRepository;
-    private final MailSenderImpl mailSenderImpl;
+//    private final MailSenderImpl mailSenderImpl;
     private static final Logger log = LoggerFactory.getLogger(Task.class);
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 100000)
     public void cronTask(){
         checkDronesBatteries();
         log.info("about to send mail");
@@ -29,7 +29,7 @@ public class Task {
         log.info("mail sent");
     }
 
-    private List<BatteryResponse> checkDronesBatteries(){
+    public List<BatteryResponse> checkDronesBatteries(){
         log.info("Checking all drones batteries");
         List<Drone> allDrones = droneRepository.findAll();
         return allDrones.stream().map(this::createAuditResponse).toList();

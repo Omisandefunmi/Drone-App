@@ -6,18 +6,26 @@ import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
 import com.olufunmi.drone.exceptions.DroneException;
 import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.service.DroneService;
+import com.olufunmi.drone.service.PdfService;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/drone")
+@RequiredArgsConstructor
 public class DroneController {
-    @Autowired
-    private  DroneService droneService;
+
+    private final DroneService droneService;
+    private final PdfService pdfService;
+
 
 
 
@@ -75,6 +83,12 @@ public class DroneController {
                 .build();
 
         return new ResponseEntity<>(apiResponse, HttpStatus.FOUND);
+    }
+
+//    @GetMapping(value = "/pdf", consumes = "/application/json", produces = "/application/json")
+    @GetMapping("/pdf")
+    public void generatePdf(HttpServletResponse response) throws IOException {
+                pdfService.export(response);
     }
 
 }
