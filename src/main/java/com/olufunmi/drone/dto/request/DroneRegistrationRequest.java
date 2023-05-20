@@ -15,6 +15,6 @@ public class DroneRegistrationRequest {
     private  String serialNumber;
     private DroneModel droneModel;
     private double batteryLevel;
-    private String message;
+//    private String message;
 
 }

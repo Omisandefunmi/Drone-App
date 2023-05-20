@@ -12,7 +12,7 @@ public class MailSenderImpl implements MailSender{
 
     String text = "Routine check has been done on the drone batteries";
     String subject = "Drone Battery Report";
-    String to = "adeyinkawale13@gmail.com";
+    String to = "omisandefunmi@gmail.com";
 
     @Override
     public void sendEmail() {

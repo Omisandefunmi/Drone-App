@@ -85,6 +85,16 @@ public class DroneController {
         return new ResponseEntity<>(apiResponse, HttpStatus.FOUND);
     }
 
+    @DeleteMapping("/drone")
+    public ResponseEntity<?> removeDrone(@RequestParam String serialNumber) throws DroneException {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .statusCode(200)
+                .data(droneService.removeDrone(serialNumber))
+                .successful(true)
+                .build();
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
 //    @GetMapping(value = "/pdf", consumes = "/application/json", produces = "/application/json")
     @GetMapping("/pdf")
     public void generatePdf(HttpServletResponse response) throws IOException {

@@ -1,11 +1,8 @@
 package com.olufunmi.drone.service;
 
-import com.olufunmi.drone.dto.response.BatteryResponse;
-import com.olufunmi.drone.dto.response.LoadDroneResponse;
+import com.olufunmi.drone.dto.response.*;
 import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
-import com.olufunmi.drone.dto.response.DroneResponse;
 import com.olufunmi.drone.dto.request.LoadDroneRequest;
-import com.olufunmi.drone.dto.response.MedicationResponse;
 import com.olufunmi.drone.exceptions.DroneException;
 import com.olufunmi.drone.model.Drone;
 
@@ -18,6 +15,8 @@ public interface DroneService {
     List <MedicationResponse> checkLoadedMedications(String serialNumber) throws DroneException;
     List<DroneResponse> viewAvailableDrone();
     BatteryResponse batteryCheck(String serialNumber) throws DroneException;
+
+    RemoveDroneResponse removeDrone(String serialNumber) throws DroneException;
 }
 
 

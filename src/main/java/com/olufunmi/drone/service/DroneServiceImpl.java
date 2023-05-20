@@ -3,16 +3,13 @@ package com.olufunmi.drone.service;
 import com.olufunmi.drone.dto.request.AddMedicationRequest;
 import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
 import com.olufunmi.drone.dto.request.LoadDroneRequest;
-import com.olufunmi.drone.dto.response.BatteryResponse;
+import com.olufunmi.drone.dto.response.*;
 import com.olufunmi.drone.exceptions.DroneException;
 import com.olufunmi.drone.exceptions.LowBatteryException;
 import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.model.Medication;
 import com.olufunmi.drone.model.enums.DroneState;
 import com.olufunmi.drone.repository.DroneRepository;
-import com.olufunmi.drone.dto.response.DroneResponse;
-import com.olufunmi.drone.dto.response.LoadDroneResponse;
-import com.olufunmi.drone.dto.response.MedicationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +34,7 @@ public class DroneServiceImpl implements DroneService{
                 .batteryLevel(droneRegistrationRequest.getBatteryLevel())
                 .serialNumber(droneRegistrationRequest.getSerialNumber())
                 .droneModel(droneRegistrationRequest.getDroneModel())
-//                .batteryLevel(80.0)
+
                 .build();
         Drone savedDrone = droneRepository.save(drone);
 
@@ -106,6 +103,20 @@ public class DroneServiceImpl implements DroneService{
                 .batteryLevel(drone.getBatteryLevel())
                 .serialNumber(drone.getSerialNumber())
                 .droneModel(drone.getDroneModel().toString())
+                .build();
+    }
+
+    @Override
+    public RemoveDroneResponse removeDrone(String serialNumber) throws DroneException {
+        Optional<Drone> found = droneRepository.findBySerialNumber(serialNumber);
+        if(found.isEmpty()){
+            throw new DroneException("Drone Not found");
+        }
+        Drone drone = found.get();
+        droneRepository.delete(drone);
+
+        return RemoveDroneResponse.builder()
+                .message("Drone "+serialNumber+ " deleted")
                 .build();
     }
 
