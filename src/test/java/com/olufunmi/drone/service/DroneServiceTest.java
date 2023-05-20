@@ -4,7 +4,7 @@ import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
 import com.olufunmi.drone.dto.response.DroneResponse;
 import com.olufunmi.drone.exceptions.DroneException;
 import com.olufunmi.drone.model.enums.DroneModel;
-import com.olufunmi.drone.model.enums.DroneState;
+import com.olufunmi.drone.service.droneService.DroneService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
