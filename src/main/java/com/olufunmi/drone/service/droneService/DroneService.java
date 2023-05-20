@@ -1,4 +1,4 @@
-package com.olufunmi.drone.service;
+package com.olufunmi.drone.service.droneService;
 
 import com.olufunmi.drone.dto.response.*;
 import com.olufunmi.drone.dto.request.DroneRegistrationRequest;

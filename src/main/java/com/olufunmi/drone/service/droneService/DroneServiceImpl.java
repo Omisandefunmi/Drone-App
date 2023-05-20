@@ -1,4 +1,4 @@
-package com.olufunmi.drone.service;
+package com.olufunmi.drone.service.droneService;
 
 import com.olufunmi.drone.dto.request.AddMedicationRequest;
 import com.olufunmi.drone.dto.request.DroneRegistrationRequest;
@@ -10,6 +10,7 @@ import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.model.Medication;
 import com.olufunmi.drone.model.enums.DroneState;
 import com.olufunmi.drone.repository.DroneRepository;
+import com.olufunmi.drone.service.medicationService.MedicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class DroneServiceImpl implements DroneService{
+public class DroneServiceImpl implements DroneService {
 
     private final DroneRepository droneRepository;
     private final MedicationService medicationService;

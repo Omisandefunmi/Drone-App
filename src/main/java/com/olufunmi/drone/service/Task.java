@@ -3,6 +3,7 @@ package com.olufunmi.drone.service;
 import com.olufunmi.drone.dto.response.BatteryResponse;
 import com.olufunmi.drone.model.Drone;
 import com.olufunmi.drone.repository.DroneRepository;
+import com.olufunmi.drone.service.mailService.MailSender;
 import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
@@ -18,14 +19,14 @@ import java.util.List;
 public class Task {
 
     private final DroneRepository droneRepository;
-//    private final MailSenderImpl mailSenderImpl;
+    private final MailSender mailSenderImpl;
     private static final Logger log = LoggerFactory.getLogger(Task.class);
 
     @Scheduled(fixedRate = 100000)
     public void cronTask(){
         checkDronesBatteries();
         log.info("about to send mail");
-//        mailSenderImpl.sendEmail();
+        mailSenderImpl.sendEmail();
         log.info("mail sent");
     }
 

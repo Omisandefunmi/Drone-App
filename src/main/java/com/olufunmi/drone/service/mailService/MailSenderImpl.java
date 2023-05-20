@@ -1,5 +1,6 @@
-package com.olufunmi.drone.service;
+package com.olufunmi.drone.service.mailService;
 
+import com.olufunmi.drone.service.mailService.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.mail.SimpleMailMessage;
@@ -7,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 @Component
 @RequiredArgsConstructor
-public class MailSenderImpl implements MailSender{
+public class MailSenderImpl implements MailSender {
     private final JavaMailSender javaMailSender;
 
     String text = "Routine check has been done on the drone batteries";

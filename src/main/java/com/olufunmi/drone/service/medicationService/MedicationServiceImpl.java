@@ -1,8 +1,9 @@
-package com.olufunmi.drone.service;
+package com.olufunmi.drone.service.medicationService;
 
 import com.olufunmi.drone.dto.request.AddMedicationRequest;
 import com.olufunmi.drone.model.Medication;
 import com.olufunmi.drone.repository.MedicationRepository;
+import com.olufunmi.drone.service.medicationService.MedicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

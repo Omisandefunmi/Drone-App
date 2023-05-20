@@ -1,4 +1,4 @@
-package com.olufunmi.drone.service;
+package com.olufunmi.drone.service.pdfService;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
@@ -6,7 +6,8 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.olufunmi.drone.dto.response.BatteryResponse;
-import com.olufunmi.drone.repository.DroneRepository;
+import com.olufunmi.drone.service.Task;
+import com.olufunmi.drone.service.pdfService.PdfService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
-public class PdfServiceImpl implements PdfService{
+public class PdfServiceImpl implements PdfService {
         private List<BatteryResponse> batteryResponseList;
         private final Task task;
     @Override
